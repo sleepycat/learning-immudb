@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: immudb
+spec:
+  selector:
+    matchLabels:
+      app: immudb
+  serviceName: immudb
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: immudb
+    spec:    
+      initContainers:
+      - name: init-immudb
+        image: ubuntu
+        command:
+        - bash
+        - "-c"
+        - |
+          set -ex
+          # Generate immudb server-id from pod ordinal index.
+          [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+          ordinal=${BASH_REMATCH[1]}
+          if [[ $ordinal -eq 0 ]]; then
+            cp /mnt/config-map/primary.cnf /mnt/configs/immudb.toml
+          else
+            cp /mnt/config-map/replica.cnf /mnt/configs/immudb.toml
+          fi          
+        volumeMounts:
+        - name: conf
+          mountPath: /mnt/configs
+          subPath: immudb.toml
+        - name: config-map
+          mountPath: /mnt/config-map
+      containers:
+      - name: immudb
+        image: codenotary/immudb
+        command: ["immudb","--config","/mnt/configs/immudb.toml"]
+        env:
+        - name: IMMU_ADMIN_PASSWORD
+          value: "secret"
+        ports:
+        - name: immudbgprc
+          containerPort: 3322
+        - name: immudbweb
+          containerPort: 8080
+        - name: immudbrepbweb
+          containerPort: 9090
+        volumeMounts:
+        - name: data
+          mountPath: /data/master
+        - name: data
+          mountPath: /data/replica
+        - name: conf
+          mountPath: /mnt/configs
+          subPath: immudb.toml
+      volumes:
+      - name: conf
+        emptyDir: {} 
+      - name: scripts
+        emptyDir: {} 
+      - name: config-map
+        configMap:
+          name: immudb
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 2Gi

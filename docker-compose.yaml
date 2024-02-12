@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  immudb:
+    # https://hub.docker.com/r/codenotary/immudb
+    image: codenotary/immudb:1.9DOM.2
+    command: --force-admin-password --admin-password immudb
+    network_mode: host
+    # https://cloud.google.com/storage/docs/aws-simple-migration#migrate_from_to_in_a_simple_migration_scenario
+    env_file: s3backend.env
+    expose:
+    - "3322:3322" # grpc endpoint
+    - "5432:5432" # postgres compatible endpoint
+    - "8080:8080" # web ui: log in with immudb:immudb
+volumes:
+  driver: {}

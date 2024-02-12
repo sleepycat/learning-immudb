@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: immudb
+resources:
+- deployment/namespace.yaml
+- deployment/configmap.yaml
+- deployment/service.yaml
+- deployment/statefulset.yaml
+images:
+- name: codenotary/immudb
+  newName: codenotary/immudb
+  newTag: 1.9DOM.2
