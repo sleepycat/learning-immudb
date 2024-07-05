@@ -1,0 +1,70 @@
+version: '3'
+
+env:
+  DATABASE_URL: postgres://$USER:$PASSWORD@localhost:5432/$DATABASE?sslmode=disable
+dotenv: ['.env']
+
+tasks:
+
+  k6:
+    desc: Install a version of k6 that includes the sql testing extension in the current directory.
+    deps: [installxk6, buildk6]
+
+  installxk6:
+    # Install the xk6 binary for building custom versions of k6.
+    cmds:
+      - go install go.k6.io/xk6/cmd/xk6@latest
+  buildk6:
+    # Build a version of k6 with sql support in the current directory.
+    cmds:
+      - xk6 build v0.52.0 --with github.com/grafana/xk6-sql
+  serviceaccount:
+    desc: Create a service account in G Cloud Storage for use with the S3 
+    cmds:
+    - gcloud iam service-accounts create immudb-cloud-storage --display-name="immudb cloud storage"
+
+  permissions:
+    # https://medium.com/@rosyparmar/google-cloud-storage-use-hmac-to-authenticate-requests-to-cloud-storage-aa8ed859be33
+    desc: Permissions needed for Service Account. Seems overpowered.
+    cmds:
+      - gcloud projects add-iam-policy-binding immudb-412302 --member="serviceAccount:immudb-cloud-storage@immudb-412302.iam.gserviceaccount.com" --role="roles/storage.admin"
+      - gcloud projects add-iam-policy-binding immudb-412302 --member="serviceAccount:immudb-cloud-storage@immudb-412302.iam.gserviceaccount.com" --role="roles/storage.hmacKeyAdmin"
+      - gcloud projects add-iam-policy-binding immudb-412302 --member="serviceAccount:immudb-cloud-storage@immudb-412302.iam.gserviceaccount.com" --role="roles/storage.objectAdmin"
+
+  storage-credentials:
+    desc: Creates storage hmac credentials in Google Cloud Storage for the S3 backend to use.
+    cmds:
+      - gcloud storage hmac create immudb-cloud-storage@immudb-412302.iam.gserviceaccount.com
+      - gcloud storage hmac list
+
+  load:
+    desc: Load test immudb using k6.
+    cmds:
+      - ./k6 run sqltest.js --duration 5s
+
+  db:
+    desc: Run immudb in docker compose.
+    cmds:
+      - docker compose up -d
+
+  migration:
+    desc: Create a new migration.
+    cmds:
+      - migrate create -ext sql -dir migrations -seq {{.CLI_ARGS}}
+
+  migrate:
+    desc: Run all migrations on the database.
+    cmds:
+      - migrate -database "$DATABASE_URL" -path migrations up
+
+  stop:
+    desc: Stop all running containers.
+    cmds:
+      - docker compose down
+
+  delete:
+    desc: Delete the contents of the Cloud Storage bucket.
+    cmds:
+      - gcloud storage rm gs://immudb-data/immudb.identifier
+      - gcloud storage rm gs://immudb-data/systemdb
+      - gcloud storage rm gs://immudb-data/defaultdb

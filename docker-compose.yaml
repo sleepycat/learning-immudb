@@ -1,8 +1,7 @@
-version: '3.8'
 services:
   immudb:
     # https://hub.docker.com/r/codenotary/immudb
-    image: codenotary/immudb:1.9DOM.2
+    image: codenotary/immudb:1.9.3
     command: --force-admin-password --admin-password immudb
     network_mode: host
     # https://cloud.google.com/storage/docs/aws-simple-migration#migrate_from_to_in_a_simple_migration_scenario
