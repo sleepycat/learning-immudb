@@ -68,3 +68,8 @@ tasks:
       - gcloud storage rm gs://immudb-data/immudb.identifier
       - gcloud storage rm gs://immudb-data/systemdb
       - gcloud storage rm gs://immudb-data/defaultdb
+
+  restart:
+    desc: Restart the locally installed immudb.
+    cmds:
+      - sudo systemctl restart immudb
