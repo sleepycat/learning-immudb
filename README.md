@@ -1,6 +1,7 @@
 # Immudb
 
 [Immudb](https://immudb.io/) is a database created by Codenotary. 
+It's design is described in this [research paper](https://codenotary.s3.amazonaws.com/Research-Paper-immudb-CodeNotary_v3.0.pdf).
 As an immutable multi-model database that separates compute and storage, 
 this is a pretty interesting project. 
 This little collection of scripts and configuration is a byproduct of my learning process.
@@ -8,9 +9,9 @@ This little collection of scripts and configuration is a byproduct of my learnin
 The kubernetes config in here is based on the config shown in 
 [this blog post](https://immudb.io/blog/pushing-new-technology-the-hard-way-part2).
 
-
 ## Running locally
 
+K6 load testing results when running locally with SSD disk.
 ```
      data_received........: 0 B 0 B/s
      data_sent............: 0 B 0 B/s
@@ -22,6 +23,7 @@ The kubernetes config in here is based on the config shown in
 ```
 ## With the S3 Backend
 
+Using the S3 Backend pointed at Google Cloud Storage.
 ```
      data_received........: 0 B 0 B/s
      data_sent............: 0 B 0 B/s
