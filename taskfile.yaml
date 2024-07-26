@@ -73,3 +73,8 @@ tasks:
     desc: Restart the locally installed immudb.
     cmds:
       - sudo systemctl restart immudb
+
+  logs:
+    desc: watch immudb logs with less
+    cmds:
+      - sudo less +F /var/log/immudb/immudb.log
