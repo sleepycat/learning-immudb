@@ -41,8 +41,10 @@ spec:
         command: ["immudb","--config","/mnt/configs/immudb.toml"]
         env:
         - name: IMMU_ADMIN_PASSWORD
-          value: "secret"
+          value: immudb
         ports:
+        - name: immudbpgsql
+          containerPort: 5432
         - name: immudbgprc
           containerPort: 3322
         - name: immudbweb

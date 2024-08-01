@@ -9,4 +9,4 @@ resources:
 images:
 - name: codenotary/immudb
   newName: codenotary/immudb
-  newTag: 1.9DOM.2
+  newTag: 1.9.4
