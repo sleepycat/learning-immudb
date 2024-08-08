@@ -78,3 +78,10 @@ tasks:
     desc: watch immudb logs with less
     cmds:
       - sudo less +F /var/log/immudb/immudb.log
+
+  data:
+    desc: load immudb demo data
+    cmds:
+      - psql -h localhost -d defaultdb -U immudb -p 5432 -f demo.sql
+    env:
+      PGSSLMODE: disable

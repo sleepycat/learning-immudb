@@ -1,8 +1,6 @@
--- demo data from immudb
-
-CREATE TABLE customers (id INTEGER, customer_name VARCHAR, email VARCHAR, address VARCHAR, city VARCHAR, ip VARCHAR, country VARCHAR, age INTEGER, active BOOLEAN, PRIMARY KEY id);
-CREATE TABLE products (id INTEGER, product VARCHAR, price VARCHAR, PRIMARY KEY id);
-CREATE TABLE orders (id INTEGER, customerID INTEGER, productID INTEGER, PRIMARY KEY id);
+CREATE TABLE IF NOT EXISTS customers (id INTEGER, customer_name VARCHAR, email VARCHAR, address VARCHAR, city VARCHAR, ip VARCHAR, country VARCHAR, age INTEGER, active BOOLEAN, PRIMARY KEY id);
+CREATE TABLE IF NOT EXISTS products (id INTEGER, product VARCHAR, price VARCHAR, PRIMARY KEY id);
+CREATE TABLE IF NOT EXISTS orders (id INTEGER, customerID INTEGER, productID INTEGER, PRIMARY KEY id);
 
 UPSERT INTO customers (id, customer_name, email, address, city, ip, country, age, active) values (1, 'Isidro Behnen', 'ibehnen0@mail.ru', 'ibehnen0@chronoengine.com', 'Arvika', '2.124.67.107', 'SE', 24, true);
 UPSERT INTO customers (id, customer_name, email, address, city, ip, country, age, active) values (2, 'Claudianus Boldt', 'cboldt1@adobe.com', 'cboldt1@elpais.com', 'Kimhae', '125.89.31.130', 'KR', 30, true);
