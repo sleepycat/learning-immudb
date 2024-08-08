@@ -14,7 +14,7 @@ export default function () {
   let results = sql.query(db, `SELECT * FROM orders JOIN customers ON orders.customerid = customers.id WHERE orders.productid = $1;`, 1);
   console.log({results})
   for (const row of results) {
-    console.log(`key: ${row.key}, value: ${row.value}`);
+    console.log({row});
   }
   db.close();
 }
