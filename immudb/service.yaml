@@ -7,7 +7,7 @@ metadata:
     app: immudb
 spec:
   ports:
-  - name: immudb
+  - name: grpc
     port: 3322
   - name: postgres
     port: 5432
@@ -25,7 +25,7 @@ metadata:
     app: immudb
 spec:
   ports:
-  - name: immudb
+  - name: grpc
     port: 3334
   - name: postgres
     port: 5432
@@ -42,7 +42,7 @@ metadata:
     app: immudb
 spec:
   ports:
-  - name: immudb
+  - name: webadmin
     port: 8080
   selector:
     statefulset.kubernetes.io/pod-name: immudb-0
@@ -56,6 +56,7 @@ metadata:
   name: immudb-ext
 spec:
   ports:
-    - port: 9090
+    - name: webread
+      port: 9090
   selector:
     statefulset.kubernetes.io/pod-name: immudb-2b

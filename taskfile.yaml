@@ -85,3 +85,8 @@ tasks:
       - psql -h localhost -d defaultdb -U immudb -p 5432 -f demo.sql
     env:
       PGSSLMODE: disable
+
+  istio:
+    desc: write istio manifests
+    cmds:
+      - istioctl manifest generate --dry-run > deployment/istio.yaml
