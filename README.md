@@ -33,3 +33,7 @@ Using the S3 Backend pointed at Google Cloud Storage.
      vus_max..............: 1   min=1       max=1
 
 ```
+
+## Architecture
+
+This [diagram](https://play.d2lang.com/?script=5FRNj9sgEL3zK0Z7XMlWdt0Th0pVD1WlHlbdX0DMxEHFYA3QyKr83yuMv7qOEx9y6yUObx5vHsMwz8-5863G_GhJImUkpAqOw8uBVaRkVlodauM4vDKpREWi5vD0BH8YQB8ne4lsBtDL8D4SF2R_IQdPwrhGEBrf4yel9Ue0YwClVmi8m7cvtLbVruslxcHf5P-lxz7kmTPVQXvV6D5JwG4hI4JU3tL-LR1jAKqugzyOmypqyqlua2-vS7QSDYcDG6BvP9--wpe373P6VXVuV2i7SvMRx2_6dUi_kdZ2B2MLJF1-wTZs3TK1ZWk0VFqi0HhlDVwESTR3CrD3iABkrQenKoP0MM2GrD1BhQZJRM8PEk7d1DHmvCVRIYf39Ad-iBZpfoX_dNLiauLyoqQ_c_h0iFfnWiePWX3200s7iwY5lK1WRiINz7Gn7aBEJciytIgtK_EkgvZ7ckzUnbQx1wSwjrmCw3sxVeW_r8c4o_Nhzo1fyD7DGEqTKY8jaUUfZt09esIia2jMa5GC_Q0AAP__&theme=1&) shows the architecture of Immudb.
