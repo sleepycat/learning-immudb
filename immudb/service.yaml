@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: immudb
+  namespace: immudb
   labels:
     app: immudb
 spec:
@@ -21,6 +22,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: immudb-read
+  namespace: immudb
   labels:
     app: immudb
 spec:
@@ -38,6 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: immudb-webserver
+  namespace: immudb
   labels:
     app: immudb
 spec:
@@ -54,6 +57,7 @@ metadata:
   labels:
     app: immudb
   name: immudb-ext
+  namespace: immudb
 spec:
   ports:
     - name: webread

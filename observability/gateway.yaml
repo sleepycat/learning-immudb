@@ -1,0 +1,35 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: global
+  namespace: gateway
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: postgres
+    port: 5432
+    protocol: TCP
+    allowedRoutes:
+      kinds:
+      - kind: TCPRoute
+  - name: grpc
+    port: 3322
+    protocol: HTTPS
+    allowedRoutes:
+      kinds:
+      - kind: GRPCRoute
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: immudb-postgres
+  namespace: immudb
+spec:
+  parentRefs:
+    - name: global
+      namespace: gateway
+      # sectionName: postgres-tcp-gw
+  rules:
+    - backendRefs:
+        - name: immudb
+          port: 5432
