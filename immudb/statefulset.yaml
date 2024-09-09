@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: immudb
+        version: 1.9.4
     spec:    
       initContainers:
       - name: init-immudb
@@ -37,7 +38,7 @@ spec:
           mountPath: /mnt/config-map
       containers:
       - name: immudb
-        image: codenotary/immudb
+        image: codenotary/immudb:1.9.4
         command: ["immudb","--config","/mnt/configs/immudb.toml"]
         env:
         - name: IMMU_ADMIN_PASSWORD
