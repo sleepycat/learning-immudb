@@ -6,13 +6,13 @@ metadata:
 spec:
   gatewayClassName: istio
   listeners:
-  - name: postgres
+  - name: tcp-5432
     port: 5432
     protocol: TCP
     allowedRoutes:
       kinds:
       - kind: TCPRoute
-  - name: grpc
+  - name: grpc-3322
     port: 3322
     protocol: HTTPS
     allowedRoutes:
@@ -33,3 +33,16 @@ spec:
     - backendRefs:
         - name: immudb
           port: 5432
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: immudb-grpc
+spec:
+  parentRefs:
+    - name: global
+      namespace: gateway
+  rules:
+  - backendRefs:
+    - name: immudb
+      port: 3322
