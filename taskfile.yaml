@@ -89,4 +89,4 @@ tasks:
   istio:
     desc: write istio manifests
     cmds:
-      - istioctl manifest generate --dry-run > observability/istio.yaml
+      - istioctl manifest generate --set profile=minimal --dry-run > observability/istio.yaml
