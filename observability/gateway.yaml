@@ -12,12 +12,33 @@ spec:
     allowedRoutes:
       kinds:
       - kind: TCPRoute
-  - name: grpc-3322
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            kubernetes.io/metadata.name: immudb
+  - name: grpc
     port: 3322
     protocol: HTTPS
     allowedRoutes:
       kinds:
       - kind: GRPCRoute
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            kubernetes.io/metadata.name: immudb
+  - protocol: HTTP
+    port: 8080
+    name: immudb-admin
+    allowedRoutes:
+      kinds:
+      - kind: HTTPRoute
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            kubernetes.io/metadata.name: immudb
 ---
 apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: TCPRoute
@@ -26,18 +47,18 @@ metadata:
   namespace: immudb
 spec:
   parentRefs:
-    - name: global
-      namespace: gateway
-      # sectionName: postgres-tcp-gw
+  - name: global
+    namespace: gateway
   rules:
-    - backendRefs:
-        - name: immudb
-          port: 5432
+  - backendRefs:
+    - name: immudb-read
+      port: 5432
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GRPCRoute
 metadata:
   name: immudb-grpc
+  namespace: immudb
 spec:
   parentRefs:
     - name: global
@@ -45,4 +66,19 @@ spec:
   rules:
   - backendRefs:
     - name: immudb
+      namespace: immudb
       port: 3322
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: immudb-admin
+  namespace: immudb
+spec:
+  parentRefs:
+    - name: global
+      namespace: gateway
+  rules:
+  - backendRefs:
+    - name: immudb-webserver
+      port: 8080
