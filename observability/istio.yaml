@@ -13935,8 +13935,6 @@ spec:
                     type: integer
                 type: object
                 x-kubernetes-validations:
-                - message: Address is required
-                  rule: has(self.address) || has(self.network)
                 - message: UDS may not include ports
                   rule: '(has(self.address) && self.address.startsWith(''unix://''))
                     ? !has(self.ports) : true'
@@ -14133,8 +14131,6 @@ spec:
                     type: integer
                 type: object
                 x-kubernetes-validations:
-                - message: Address is required
-                  rule: has(self.address) || has(self.network)
                 - message: UDS may not include ports
                   rule: '(has(self.address) && self.address.startsWith(''unix://''))
                     ? !has(self.ports) : true'
@@ -14331,8 +14327,6 @@ spec:
                     type: integer
                 type: object
                 x-kubernetes-validations:
-                - message: Address is required
-                  rule: has(self.address) || has(self.network)
                 - message: UDS may not include ports
                   rule: '(has(self.address) && self.address.startsWith(''unix://''))
                     ? !has(self.ports) : true'
@@ -16771,7 +16765,7 @@ data:
         "sts": {
           "servicePort": 0
         },
-        "tag": "1.23.0",
+        "tag": "1.23.2",
         "variant": ""
       },
       "istio_cni": {
@@ -17045,7 +17039,7 @@ spec:
               resource: limits.cpu
         - name: PLATFORM
           value: ""
-        image: docker.io/istio/pilot:1.23.0
+        image: docker.io/istio/pilot:1.23.2
         name: discovery
         ports:
         - containerPort: 8080
