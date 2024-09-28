@@ -51,7 +51,8 @@ spec:
     namespace: gateway
   rules:
   - backendRefs:
-    - name: immudb-read
+    - name: immudb-webserver
+      namespace: immudb
       port: 5432
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -65,7 +66,7 @@ spec:
       namespace: gateway
   rules:
   - backendRefs:
-    - name: immudb
+    - name: immudb-webserver
       namespace: immudb
       port: 3322
 ---
@@ -81,4 +82,5 @@ spec:
   rules:
   - backendRefs:
     - name: immudb-webserver
+      namespace: immudb
       port: 8080
