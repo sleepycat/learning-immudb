@@ -40,7 +40,7 @@ tasks:
   load:
     desc: Load test immudb using k6.
     cmds:
-      - ./k6 run sqltest.js --duration 5s
+      - ./k6 run sqltest.js --duration 15s
 
   db:
     desc: Run immudb in docker compose.

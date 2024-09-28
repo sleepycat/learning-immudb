@@ -1,12 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: immudb
 resources:
 - namespace.yaml
 - configmap.yaml
 - service.yaml
 - statefulset.yaml
+- audit.yaml
 images:
 - name: codenotary/immudb
   newName: codenotary/immudb
-  newTag: 1.9.4
+  newTag: 1.9.5
+- name: codenotary/immuclient
+  newName: codenotary/immuclient
+  newTag: 1.9.5

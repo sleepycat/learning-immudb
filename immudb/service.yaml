@@ -47,6 +47,8 @@ spec:
   ports:
   - name: http-8080
     port: 8080
+  - name: grpc
+    port: 3322
   - name: tcp-5432
     port: 5432
   selector:

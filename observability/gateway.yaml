@@ -3,6 +3,7 @@ kind: Gateway
 metadata:
   name: global
   namespace: gateway
+  labels:
 spec:
   gatewayClassName: istio
   listeners:
@@ -66,7 +67,7 @@ spec:
       namespace: gateway
   rules:
   - backendRefs:
-    - name: immudb-webserver
+    - name: immudb
       namespace: immudb
       port: 3322
 ---

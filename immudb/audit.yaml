@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: audit
+    version: 1.9.5
+  name: audit
+  namespace: audit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audit
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: audit
+        version: 1.9.5
+    spec:
+      containers:
+      - name: immuclient
+        image: codenotary/immuclient
+        env:
+        - name: IMMUCLIENT_IMMUDB_ADDRESS
+          value: immudb.immudb
+        - name: IMMUCLIENT_IMMUDB_PORT
+          value: "3322"
+        - name: IMMUCLIENT_AUTH
+          value: "false"
+        - name: IMMUCLIENT_MTLS
+          value: "false"
+        - name: IMMUCLIENT_SERVERNAME
+          value: immudb
+        args:
+        - audit-mode
+        - --audit-password=immudb
+        - --audit-username=immudb
+        - --immudb-address=immudb-webserver.immudb.svc.cluster.local
+        - --audit-databases=defaultdb
+        resources: {}
+status: {}

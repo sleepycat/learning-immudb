@@ -6,3 +6,12 @@ metadata:
     istio-injection: enabled
 spec: {}
 status: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: audit
+  labels:
+    istio-injection: enabled
+spec: {}
+status: {}
