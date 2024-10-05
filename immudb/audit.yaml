@@ -23,7 +23,7 @@ spec:
         image: codenotary/immuclient
         env:
         - name: IMMUCLIENT_IMMUDB_ADDRESS
-          value: immudb.immudb
+          value: rw.immudb
         - name: IMMUCLIENT_IMMUDB_PORT
           value: "3322"
         - name: IMMUCLIENT_AUTH
@@ -31,12 +31,12 @@ spec:
         - name: IMMUCLIENT_MTLS
           value: "false"
         - name: IMMUCLIENT_SERVERNAME
-          value: immudb
+          value: rw.immudb
         args:
         - audit-mode
         - --audit-password=immudb
         - --audit-username=immudb
-        - --immudb-address=immudb-webserver.immudb.svc.cluster.local
+        - --immudb-address=rw.immudb.svc.cluster.local
         - --audit-databases=defaultdb
         resources: {}
 status: {}

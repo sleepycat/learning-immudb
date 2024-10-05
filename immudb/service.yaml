@@ -8,7 +8,7 @@ metadata:
     app: immudb
 spec:
   ports:
-  - name: grpc
+  - name: grpc-3322
     port: 3322
   - name: tcp-5432
     port: 5432
@@ -21,13 +21,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: immudb-read
+  name: ro
   namespace: immudb
   labels:
     app: immudb
 spec:
   ports:
-  - name: grpc
+  - name: grpc-3344
     port: 3334
   - name: tcp-5432
     port: 5432
@@ -39,7 +39,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: immudb-webserver
+  name: rw
   namespace: immudb
   labels:
     app: immudb
@@ -47,7 +47,7 @@ spec:
   ports:
   - name: http-8080
     port: 8080
-  - name: grpc
+  - name: grpc-3322
     port: 3322
   - name: tcp-5432
     port: 5432
@@ -60,7 +60,7 @@ kind: Service
 metadata:
   labels:
     app: immudb
-  name: immudb-ext
+  name: console
   namespace: immudb
 spec:
   ports:

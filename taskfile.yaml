@@ -40,7 +40,7 @@ tasks:
   load:
     desc: Load test immudb using k6.
     cmds:
-      - ./k6 run sqltest.js --duration 15s
+      - ./k6 run sqltest.js --duration 1m
 
   db:
     desc: Run immudb in docker compose.
@@ -89,7 +89,7 @@ tasks:
   istio:
     desc: write istio manifests
     cmds:
-      - istioctl manifest generate --set profile=minimal  --set values.pilot.env.PILOT_ENABLE_ALPHA_GATEWAY_API=true --dry-run > observability/istio.yaml
+      - istioctl manifest generate --set profile=minimal --set values.pilot.env.PILOT_ENABLE_ALPHA_GATEWAY_API=true --dry-run > observability/istio.yaml
 
   forward:
     desc: port forward the gateway ports

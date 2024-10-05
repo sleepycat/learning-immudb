@@ -18,8 +18,19 @@ spec:
         selector:
           matchLabels:
             kubernetes.io/metadata.name: immudb
-  - name: grpc
+  - name: grpc-3322
     port: 3322
+    protocol: HTTPS
+    allowedRoutes:
+      kinds:
+      - kind: GRPCRoute
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            kubernetes.io/metadata.name: immudb
+  - name: grpc-3334
+    port: 3334
     protocol: HTTPS
     allowedRoutes:
       kinds:
@@ -52,14 +63,14 @@ spec:
     namespace: gateway
   rules:
   - backendRefs:
-    - name: immudb-webserver
+    - name: rw
       namespace: immudb
       port: 5432
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GRPCRoute
 metadata:
-  name: immudb-grpc
+  name: grpc-3322
   namespace: immudb
 spec:
   parentRefs:
@@ -67,9 +78,24 @@ spec:
       namespace: gateway
   rules:
   - backendRefs:
-    - name: immudb
+    - name: rw
       namespace: immudb
       port: 3322
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: grpc-3334
+  namespace: immudb
+spec:
+  parentRefs:
+    - name: global
+      namespace: gateway
+  rules:
+  - backendRefs:
+    - name: ro
+      namespace: immudb
+      port: 3334
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -82,6 +108,21 @@ spec:
       namespace: gateway
   rules:
   - backendRefs:
-    - name: immudb-webserver
+    - name: rw
       namespace: immudb
       port: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: immudb-console
+  namespace: immudb
+spec:
+  parentRefs:
+    - name: global
+      namespace: gateway
+  rules:
+  - backendRefs:
+    - name: console
+      namespace: immudb
+      port: 9090
