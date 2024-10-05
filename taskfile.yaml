@@ -95,3 +95,10 @@ tasks:
     desc: port forward the gateway ports
     cmds:
       - kubectl port-forward -n gateway svc/global-istio 5432 8080 3322
+
+  psql:
+    desc: get psql access to immudb
+    cmds:
+      - psql -h localhost -d defaultdb -U immudb -p 5432
+    env:
+      PGSSLMODE: disable
