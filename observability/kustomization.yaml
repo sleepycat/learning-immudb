@@ -3,7 +3,7 @@ kind: Kustomization
 # The stable channel doesn't include TCPRoutes
 # - "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0"
 resources:
-- https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml
+- https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 - istio.yaml
 - kiali.yaml
 - prometheus.yaml
